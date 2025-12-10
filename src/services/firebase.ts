@@ -1,33 +1,14 @@
-// src/services/firebase.ts
 import { initializeApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  apiKey: "AIzaSyDrq3HQJS7tTmxGnnnPP7eXW_D8EBbgtsE",
+  authDomain: "grampanchayatchikhali-853fe.firebaseapp.com",
+  projectId: "grampanchayatchikhali-853fe",
+  storageBucket: "grampanchayatchikhali-853fe.firebasestorage.app",
+  messagingSenderId: "36658942460",
+  appId: "1:36658942460:web:305a97df8580c94519a279",
 };
 
-const app = initializeApp(firebaseConfig);
-
-// ✅ Auth
-export const auth = getAuth(app);
-const provider = new GoogleAuthProvider();
-
-// ✅ Firestore
+export const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
-
-// ✅ Google Login (Navbar यही use करता है)
-export const signInWithGoogle = async () => {
-  const result = await signInWithPopup(auth, provider);
-  return result.user;
-};
-
-// ✅ Logout
-export const publicSignOut = async () => {
-  await signOut(auth);
-};
