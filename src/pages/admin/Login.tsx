@@ -9,14 +9,14 @@ const Login: React.FC = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (login(username, password)) {
-      navigate('/admin/dashboard');
-    } else {
-      setError('Invalid credentials. Try admin / admin123');
-    }
-  };
+  const handleLogin = async () => {
+  try {
+    await signInWithGoogle();
+    navigate('/admin');
+  } catch (err) {
+    console.error(err);
+  }
+};
 
   return (
     <div className="min-h-screen bg-[#0A4275] flex items-center justify-center px-4 relative">
