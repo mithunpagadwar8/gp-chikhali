@@ -47,5 +47,3 @@ export const publicSignOut = async () => {
     console.error("Logout failed", error);
   }
 };
-
-import { app } from "./firebase";
