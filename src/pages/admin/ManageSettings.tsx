@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { getStoredData, saveStoredData, fileToBase64, updateCredentials } from '../../services/storage';
-import { AppData, ContactDetails } from '../../types';
-import { Trash2, Upload, Eye, Lock, MapPin } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { AppData, ContactDetails } from "../../types";
+import { getStoredData, setStoredData } from "../../services/storage";
+import { Trash2, Upload, Eye, Lock, MapPin } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const ManageSettings: React.FC = () => {
   const [data, setData] = useState<AppData | null>(null);
