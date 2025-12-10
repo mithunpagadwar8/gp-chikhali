@@ -18,6 +18,7 @@ import {
   deleteObject,
 } from "firebase/storage";
 import { db } from "../../services/firebase";
+import { uploadFile, deleteFile } from "../../services/firebaseStorage";
 import { Plus, Edit, Trash2, X, Upload, Video } from "lucide-react";
 
 ///// Types & constants (you can move these to src/types.ts if preferred) /////
