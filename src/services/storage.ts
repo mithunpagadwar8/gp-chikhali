@@ -17,3 +17,12 @@ export const setStoredData = (key: string, value: any) => {
 export const getPublicUser = () => {
   return getStoredData("publicUser");
 };
+
+export const fileToBase64 = (file: File): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+};
