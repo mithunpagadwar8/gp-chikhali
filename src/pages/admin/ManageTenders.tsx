@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getStoredData, saveStoredData } from '../../services/storage';
+import { getStoredData, setStoredData } from '../../services/storage';
 import { AppData, Tender } from '../../types';
 import { Plus, Trash2, X } from 'lucide-react';
 
