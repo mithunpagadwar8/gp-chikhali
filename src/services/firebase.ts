@@ -8,43 +8,37 @@ import {
   User,
 } from "firebase/auth";
 
-// ✅ Vite env variables
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  apiKey: "AIzaSyDrq3HQJS7tTmxGnnnPP7eXW_D8EBbgtsE",
+  authDomain: "grampanchayatchikhali-853fe.firebaseapp.com",
+  projectId: "grampanchayatchikhali-853fe",
+  storageBucket: "grampanchayatchikhali-853fe.firebasestorage.app",
+  messagingSenderId: "36658942460",
+  appId: "1:36658942460:web:305a97df8580c94519a279",
 };
 
-// ✅ EXPORT APP (IMPORTANT)
 export const app = initializeApp(firebaseConfig);
 
-// ✅ Firestore
+// Firestore
 export const db = getFirestore(app);
 
-// ✅ Auth
+// Auth
 export const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 provider.setCustomParameters({ prompt: "select_account" });
 
-// ✅ GOOGLE LOGIN
+// ✅ Google Login
 export const signInWithGoogle = async (): Promise<User | null> => {
   try {
     const result = await signInWithPopup(auth, provider);
     return result.user;
-  } catch (error) {
-    console.error("Google login failed", error);
+  } catch (err) {
+    console.error(err);
     return null;
   }
 };
 
-// ✅ LOGOUT
+// ✅ Logout
 export const publicSignOut = async () => {
-  try {
-    await signOut(auth);
-  } catch (error) {
-    console.error("Logout failed", error);
-  }
+  await signOut(auth);
 };
