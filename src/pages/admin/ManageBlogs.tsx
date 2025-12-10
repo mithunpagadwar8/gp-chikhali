@@ -101,12 +101,17 @@ const ManageBlogs: React.FC = () => {
       .finally(() => setLoading(false));
   }, []);
 
-  // Helpers: upload file to firebase storage and return URL
-  const uploadFile = (file: File, pathPrefix: string, onProgress?: (p: number) => void): Promise<string> => {
-    return new Promise((resolve, reject) => {
-      const fileName = `${pathPrefix}/${Date.now()}_${file.name.replace(/\s+/g, "_")}`;
-      const sRef = storageRef(storage, fileName);
-      const uploadTask = uploadBytesResumable(sRef, file);
+  const handleUpload = async () => {
+  if (!file) return;
+
+  const imageUrl = await uploadFile(file, "blogs", (p) => setProgress(p));
+
+  // 👉 इसके बाद जो पहले होता था, वही रहेगा
+  await addDoc(collection(db, "blogs"), {
+    imageUrl,
+    createdAt: Timestamp.now(),
+  });
+};
 
       uploadTask.on(
         "state_changed",
