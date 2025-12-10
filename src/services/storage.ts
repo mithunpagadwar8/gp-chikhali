@@ -26,3 +26,10 @@ export const fileToBase64 = (file: File): Promise<string> => {
     reader.readAsDataURL(file);
   });
 };
+
+export const isAuthenticated = (): boolean => {
+  if (typeof window === "undefined") return false;
+
+  const user = localStorage.getItem("publicUser");
+  return !!user;
+};
