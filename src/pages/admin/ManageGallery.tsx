@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getStoredData, saveStoredData, fileToBase64 } from '../../services/storage';
+import { getStoredData, setStoredData, fileToBase64 } from '../../services/storage';
 import { AppData } from '../../types';
 import { Trash2, Upload, Image } from 'lucide-react';
 
