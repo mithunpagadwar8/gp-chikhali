@@ -1,15 +1,14 @@
 import React from "react";
 import { HashRouter as Router, Routes, Route, Outlet, Navigate } from "react-router-dom";
+import { AuthProvider } from "./providers/AuthProvider";
+import { AdminProtectedRoute, CitizenProtectedRoute } from "./providers/AuthProvider";
 
 // Layouts
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import AdminLayout from "./components/AdminLayout";
 
-// Route Guards
-import { AdminProtectedRoute, CitizenProtectedRoute } from "./providers/AuthProvider";
-
-// Public Pages
+// Public pages
 import Home from "./pages/public/Home";
 import BlogList from "./pages/public/BlogList";
 import BlogPostView from "./pages/public/BlogPost";
@@ -20,7 +19,7 @@ import Tenders from "./pages/public/Tenders";
 import TaxList from "./pages/public/TaxList";
 import Gallery from "./pages/public/Gallery";
 
-// Admin Pages
+// Admin pages
 import Dashboard from "./pages/admin/Dashboard";
 import ManageSettings from "./pages/admin/ManageSettings";
 import ManageTeam from "./pages/admin/ManageTeam";
@@ -44,51 +43,49 @@ const PublicLayout = () => (
 
 const App: React.FC = () => {
   return (
-    <Router>
-      <Routes>
+    <AuthProvider>
+      <Router>
+        <Routes>
 
-        {/* ✅ PUBLIC */}
-        <Route path="/" element={<PublicLayout />}>
-          <Route index element={<Home />} />
-          <Route path="blog" element={<BlogList />} />
-          <Route path="blog/:id" element={<BlogPostView />} />
-          <Route path="contact" element={<Contact />} />
+          {/* ✅ PUBLIC */}
+          <Route path="/" element={<PublicLayout />}>
+            <Route index element={<Home />} />
+            <Route path="blog" element={<BlogList />} />
+            <Route path="blog/:id" element={<BlogPostView />} />
+            <Route path="contact" element={<Contact />} />
 
-          {/* ✅ Citizen-only */}
-          <Route path="services" element={<CitizenProtectedRoute><Services /></CitizenProtectedRoute>} />
-          <Route path="schemes" element={<CitizenProtectedRoute><Schemes /></CitizenProtectedRoute>} />
-          <Route path="tenders" element={<CitizenProtectedRoute><Tenders /></CitizenProtectedRoute>} />
-          <Route path="tax-list" element={<CitizenProtectedRoute><TaxList /></CitizenProtectedRoute>} />
-          <Route path="gallery" element={<CitizenProtectedRoute><Gallery /></CitizenProtectedRoute>} />
-        </Route>
+            {/* ✅ Citizen */}
+            <Route path="services" element={<CitizenProtectedRoute><Services /></CitizenProtectedRoute>} />
+            <Route path="schemes" element={<CitizenProtectedRoute><Schemes /></CitizenProtectedRoute>} />
+            <Route path="tenders" element={<CitizenProtectedRoute><Tenders /></CitizenProtectedRoute>} />
+            <Route path="tax-list" element={<CitizenProtectedRoute><TaxList /></CitizenProtectedRoute>} />
+            <Route path="gallery" element={<CitizenProtectedRoute><Gallery /></CitizenProtectedRoute>} />
+          </Route>
 
-        {/* ✅ ADMIN */}
-        <Route
-          path="/admin"
-          element={
+          {/* ✅ ADMIN */}
+          <Route path="/admin" element={
             <AdminProtectedRoute>
               <AdminLayout />
             </AdminProtectedRoute>
-          }
-        >
-          <Route path="dashboard" element={<Dashboard />} />
-          <Route path="settings" element={<ManageSettings />} />
-          <Route path="team" element={<ManageTeam />} />
-          <Route path="blogs" element={<ManageBlogs />} />
-          <Route path="meetings" element={<ManageMeetings />} />
-          <Route path="schemes" element={<ManageSchemes />} />
-          <Route path="notices" element={<ManageNotices />} />
-          <Route path="tenders" element={<ManageTenders />} />
-          <Route path="taxes" element={<ManageTaxes />} />
-          <Route path="projects" element={<ManageProjects />} />
-          <Route path="gallery" element={<ManageGallery />} />
-          <Route path="services" element={<ManageServices />} />
+          }>
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="settings" element={<ManageSettings />} />
+            <Route path="team" element={<ManageTeam />} />
+            <Route path="blogs" element={<ManageBlogs />} />
+            <Route path="meetings" element={<ManageMeetings />} />
+            <Route path="schemes" element={<ManageSchemes />} />
+            <Route path="notices" element={<ManageNotices />} />
+            <Route path="tenders" element={<ManageTenders />} />
+            <Route path="taxes" element={<ManageTaxes />} />
+            <Route path="projects" element={<ManageProjects />} />
+            <Route path="gallery" element={<ManageGallery />} />
+            <Route path="services" element={<ManageServices />} />
+            <Route index element={<Navigate to="/admin/dashboard" />} />
+          </Route>
 
-          <Route index element={<Navigate to="/admin/dashboard" />} />
-        </Route>
-
-      </Routes>
-    </Router>
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 };
 
