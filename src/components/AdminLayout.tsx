@@ -7,10 +7,10 @@ const AdminLayout: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const handleLogout = () => {
-    logout();
-    navigate('/'); // Redirect to Home Page after logout
-  };
+ const handleLogout = async () => {
+  await publicSignOut();
+  navigate('/');
+};
 
   const isActive = (path: string) => location.pathname === path ? 'bg-[#0A4275] text-white' : 'text-gray-600 hover:bg-gray-100';
 
