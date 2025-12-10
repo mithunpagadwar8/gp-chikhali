@@ -11,12 +11,6 @@ import {
   query,
   Timestamp,
 } from "firebase/firestore";
-import {
-  ref as storageRef,
-  uploadBytesResumable,
-  getDownloadURL,
-  deleteObject,
-} from "firebase/storage";
 import { db } from "../../services/firebase";
 import { uploadFile, deleteFile } from "../../services/firebaseStorage";
 import { Plus, Edit, Trash2, X, Upload, Video } from "lucide-react";
