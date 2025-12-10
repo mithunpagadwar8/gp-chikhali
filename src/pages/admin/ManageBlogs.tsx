@@ -17,7 +17,7 @@ import {
   getDownloadURL,
   deleteObject,
 } from "firebase/storage";
-import { db, storage } from "../src/services/firebase"; // <-- adjust path if needed
+import { db, storage } from "../../services/firebase"; // Correct path
 import { Plus, Edit, Trash2, X, Upload, Video } from "lucide-react";
 
 ///// Types & constants (you can move these to src/types.ts if preferred) /////
