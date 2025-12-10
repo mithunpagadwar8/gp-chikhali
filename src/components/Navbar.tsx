@@ -10,15 +10,16 @@ const Navbar: React.FC = () => {
   const [user, setUser] = useState<any>(null);
   const location = useLocation();
 
-  useEffect(() => {
-    const data = getStoredData();
-    if (data.logo) {
-      setLogo(data.logo);
-    }
-    // Check for logged in public user
-    const currentUser = getPublicUser();
-    setUser(currentUser);
-  }, [location]);
+ useEffect(() => {
+  const data = getStoredData();
+
+  if (data && data.logo) {
+    setLogo(data.logo);
+  }
+
+  const currentUser = getPublicUser();
+  setUser(currentUser);
+}, [location]);
 
   const handleLogin = async () => {
       const u = await signInWithGoogle();
