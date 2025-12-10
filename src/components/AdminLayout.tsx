@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useNavigate, useLocation, Outlet } from 'react-router-dom';
 import { LayoutDashboard, FileText, Image, Users, LogOut, Settings, Briefcase, FileSpreadsheet, Megaphone, Link as LinkIcon, Download, Calendar, ExternalLink, IndianRupee, KeyRound } from 'lucide-react';
-import { logout } from '../services/storage';
+import { publicSignOut } from '../services/firebase';
 
 const AdminLayout: React.FC = () => {
   const navigate = useNavigate();
