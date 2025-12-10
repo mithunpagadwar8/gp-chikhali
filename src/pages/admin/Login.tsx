@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { login } from '../../services/storage';
+import { signInWithGoogle } from '../../services/firebase';
 import { Lock, ArrowLeft } from 'lucide-react';
 
 const Login: React.FC = () => {
