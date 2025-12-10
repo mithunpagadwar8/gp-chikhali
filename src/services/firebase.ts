@@ -48,4 +48,4 @@ export const publicSignOut = async () => {
   }
 };
 
-export default app;
+import { app } from "./firebase";
