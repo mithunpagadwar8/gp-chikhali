@@ -1,14 +1,13 @@
 // src/services/storage.ts
 
-// ✅ Get data from localStorage
-export const getStoredData = <T = any>(key: string): T | null => {
-  if (typeof window === "undefined") return null;
+export const getStoredData = <T = any>(key: string): T => {
+  if (typeof window === "undefined") return {} as T;
 
   try {
     const data = localStorage.getItem(key);
-    return data ? JSON.parse(data) : null;
+    return data ? (JSON.parse(data) as T) : ({} as T);
   } catch {
-    return null;
+    return {} as T;
   }
 };
 
