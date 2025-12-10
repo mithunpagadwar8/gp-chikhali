@@ -18,7 +18,8 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
 
-const app = initializeApp(firebaseConfig);
+// ✅ EXPORT APP (IMPORTANT)
+export const app = initializeApp(firebaseConfig);
 
 // ✅ Firestore
 export const db = getFirestore(app);
@@ -28,7 +29,7 @@ export const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 provider.setCustomParameters({ prompt: "select_account" });
 
-/* ✅ GOOGLE LOGIN (EXPORT REQUIRED) */
+// ✅ GOOGLE LOGIN
 export const signInWithGoogle = async (): Promise<User | null> => {
   try {
     const result = await signInWithPopup(auth, provider);
@@ -39,7 +40,7 @@ export const signInWithGoogle = async (): Promise<User | null> => {
   }
 };
 
-/* ✅ LOGOUT */
+// ✅ LOGOUT
 export const publicSignOut = async () => {
   try {
     await signOut(auth);
