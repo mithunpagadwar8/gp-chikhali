@@ -1,63 +1,21 @@
-import { initializeApp, getApps, getApp } from 'firebase/app';
-import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged, User } from 'firebase/auth';
-import { getStoredData, setPublicUser, removePublicUser } from './storage';
+import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 
-// Helper to get auth instance based on dynamic config stored in localStorage
-export const getFirebaseAuth = () => {
-   const data = getStoredData();
-   
-   // Check if config exists and has at least an API key
-   if (!data.firebaseConfig || !data.firebaseConfig.apiKey) {
-       return null;
-   }
-
-   try {
-      // Avoid duplicate initialization
-      if (getApps().length > 0) {
-          return getAuth(getApp());
-      }
-      
-      const app = initializeApp(data.firebaseConfig);
-      return getAuth(app);
-   } catch(e) {
-       console.error("Firebase Init Error", e);
-       return null;
-   }
+// Firebase Configuration from .env
+const firebaseConfig = {
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
 
-export const signInWithGoogle = async (): Promise<User | null> => {
-    const auth = getFirebaseAuth();
-    if (!auth) {
-        alert("System Error: Google Login is not configured by Admin.");
-        return null;
-    }
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
 
-    const provider = new GoogleAuthProvider();
-    try {
-        const result = await signInWithPopup(auth, provider);
-        const user = result.user;
-        
-        // Save minimal user info to session storage for easy access in non-async components
-        setPublicUser({
-            uid: user.uid,
-            displayName: user.displayName,
-            email: user.email,
-            photoURL: user.photoURL
-        });
-        
-        return user;
-    } catch (error: any) {
-        console.error("Login Failed", error);
-        alert(`Login Failed: ${error.message}`);
-        return null;
-    }
-};
-
-export const publicSignOut = async () => {
-    const auth = getFirebaseAuth();
-    if (auth) {
-        await signOut(auth);
-    }
-    removePublicUser();
-    window.location.reload(); // Refresh to update UI state
-};
+// Firestore and Storage
+export const db = getFirestore(app);
+export const storage = getStorage(app);
