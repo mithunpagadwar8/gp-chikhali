@@ -1,8 +1,6 @@
 // src/services/storage.ts
-
 export const getStoredData = <T = any>(key: string): T | null => {
   if (typeof window === "undefined") return null;
-
   try {
     const data = localStorage.getItem(key);
     return data ? JSON.parse(data) : null;
