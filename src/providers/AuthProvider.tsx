@@ -1,36 +1,43 @@
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { onAuthStateChanged, User } from "firebase/auth";
-import { createContext, useContext, useEffect, useState } from "react";
-import { auth } from "../firebase";
+import { auth } from "../services/firebase";
+
+const ADMIN_EMAIL = "mithunpagadwar8@gmail.com";
 
 type AuthContextType = {
   user: User | null;
+  isAdmin: boolean;
   loading: boolean;
 };
 
 const AuthContext = createContext<AuthContextType>({
   user: null,
+  isAdmin: false,
   loading: true,
 });
 
-export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (u) => {
-      setUser(u);
+      if (u) {
+        setUser(u);
+        setIsAdmin(u.email === ADMIN_EMAIL);
+      } else {
+        setUser(null);
+        setIsAdmin(false);
+      }
       setLoading(false);
     });
+
     return () => unsub();
   }, []);
 
-  // ✅ BLOCK UI until auth ready
-  if (loading) {
-    return <div className="h-screen flex items-center justify-center">Loading…</div>;
-  }
-
   return (
-    <AuthContext.Provider value={{ user, loading }}>
+    <AuthContext.Provider value={{ user, isAdmin, loading }}>
       {children}
     </AuthContext.Provider>
   );
