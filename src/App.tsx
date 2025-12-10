@@ -26,7 +26,7 @@ import ManageProjects from './pages/admin/ManageProjects';
 import ManageGallery from './pages/admin/ManageGallery'; 
 import ManageServices from './pages/admin/ManageServices'; 
 import ManageGoogleAuth from './pages/admin/ManageGoogleAuth'; // Added
-import { isAuthenticated, getPublicUser } from './services/storage';
+import { AuthProvider, useAuth } from "./providers/AuthProvider";
 
 const PublicLayout: React.FC = () => (
   <div className="flex flex-col min-h-screen">
