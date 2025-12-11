@@ -7,4 +7,9 @@ export default defineConfig({
 
   // ✅ VERY IMPORTANT for Vercel + custom domain
   base: "/",
+
+  // Increase chunk size warning limit (e.g., set to 1000KB)
+  build: {
+    chunkSizeWarningLimit: 1000, // Setting this to a higher value, e.g., 1000 KB (1MB)
+  },
 });
